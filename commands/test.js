@@ -4,12 +4,12 @@ module.exports = {
     cooldown: 5,
     guildOnly: true,
     aliases: ["tests", "cool-test"],
-    args: false,
-    usage: " ",
+    args: true,
+    usage: "<args>",
     permissions: "BAN_MEMBERS",
     async execute(message, args) {
         try {
-            await message.channel.send("Hello world pt.2!")
+            await message.channel.send("Hello world pt.2!" + " " + args[0]);
         } catch (err) {
             console.error(err);
             message.reply("Error using this command, please try again.")

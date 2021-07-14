@@ -36,6 +36,11 @@ client.on("message", message => {
     const command = client.commands.get(cName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cName));
     if (!command) return;
 
+    // Prevents server commands from being executed in the DMs.
+    if (command.guildOnly && message.channel.type === "dm") {
+        return message.reply("I can't execute that command inside DMs!");
+    };
+
     // Check to see if the input command has any permission restrictions.
     // If there are command permissions, check to see if the message author has the required permissions.
     // If not, the function ends.
@@ -46,10 +51,17 @@ client.on("message", message => {
         };
     };
 
-    // Prevents server commands from being executed in the DMs.
-    if (command.guildOnly && message.channel.type === "dm") {
-        return message.reply("I can't execute that command inside DMs!");
-    };
+    // If a command requires arguments, this validation runs to make sure the user added arguments to the command.
+    if (command.args && !args.length) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
+
+        // If a usage is set up, show the user the proper way to run the command.
+        if (command.usage) {
+            reply += `\n\nThe proper usage would be: \n\`${process.env.prefix}${command.name} ${command.usage}\``;
+        }
+
+        return message.channel.send(reply);
+    }
 
     // Execute desired command
     try {
