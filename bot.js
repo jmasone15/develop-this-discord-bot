@@ -34,6 +34,11 @@ client.on("message", message => {
     const command = client.commands.get(cName);
     if (!command) return;
 
+    // Prevents server commands from being executed in the DMs.
+    if (command.guildOnly && message.channel.type === "dm") {
+        return message.reply("I can't execute that command inside DMs!");
+    };
+
     // Execute desired command
     try {
         command.execute(message, args)
@@ -43,6 +48,8 @@ client.on("message", message => {
     };
 });
 
+// Ready listener
+// Sets the bot's activity and logs a string.
 client.once("ready", () => {
     client.user.setPresence({ activity: { name: "$help", type: "LISTENING" }, status: "online" });
     console.log("Ready!");

@@ -2,6 +2,7 @@ module.exports = {
     name: "test",
     description: "Test command for developing.",
     cooldown: 5,
+    guildOnly: true,
     args: false,
     usage: " ",
     async execute(message, args) {
