@@ -7,8 +7,9 @@ dotenv.config();
 // New instance of the Discord client class 
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 
-// Discord Collection of all client commands.
+// Discord Collections.
 client.commands = new Discord.Collection();
+client.cooldowns = new Discord.Collection();
 
 // First, grab all of the files in the ./commands folder.
 // Then, loop through all of the files in the folder.
@@ -58,10 +59,49 @@ client.on("message", message => {
         // If a usage is set up, show the user the proper way to run the command.
         if (command.usage) {
             reply += `\n\nThe proper usage would be: \n\`${process.env.prefix}${command.name} ${command.usage}\``;
-        }
+        };
 
         return message.channel.send(reply);
+    };
+
+    // Command cooldowns
+    // This cooldowns collection won't hold any data long term, it will be used as a short term watcher for command spams.
+    // Whenever a command is used, the name of the command and the user who called the command will be saved in the collection.
+    // If the message author tries to resend the command within a certain time frame, a cooldown handler will fire within the function.
+    // This cooldown handler informs the message author that they need to wait a certain amount of time before using that command again.
+    // After a certain amount of time has passed, the collection value will be deleted so that the user is free to use the command again.
+    const { cooldowns } = client;
+
+    // If the command has not been previously set in the cooldowns collection, set it in there.
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new Discord.Collection());
+    };
+
+    // Current timestamp
+    const now = Date.now();
+
+    // Grab the targeted command from the cooldowns collection.
+    const timestamps = cooldowns.get(command.name);
+
+    // Grab the cooldown time value from the command and set it to seconds.
+    const coolTime = (command.cooldown || 1) * 1000;
+
+    // If there is already a log of the author using this command previously, check to see if they are within the time frame of cooldown.
+    // If they are, send them the cooldown error message and tell them how long they have to wait.
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + coolTime;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+        }
     }
+
+    // If there is not already a log of the author using this command, set one with the timestamp of now.
+    timestamps.set(message.author.id, now);
+
+    // Set a timeout to delete the command log once the cooldown time has passed.
+    setTimeout(() => timestamps.delete(message.author.id), coolTime);
 
     // Execute desired command
     try {
