@@ -6,6 +6,7 @@ module.exports = {
     aliases: ["tests", "cool-test"],
     args: false,
     usage: " ",
+    permissions: "BAN_MEMBERS",
     async execute(message, args) {
         try {
             await message.channel.send("Hello world pt.2!")

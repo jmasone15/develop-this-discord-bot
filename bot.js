@@ -36,6 +36,16 @@ client.on("message", message => {
     const command = client.commands.get(cName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cName));
     if (!command) return;
 
+    // Check to see if the input command has any permission restrictions.
+    // If there are command permissions, check to see if the message author has the required permissions.
+    // If not, the function ends.
+    if (command.permissions) {
+        const authorPerms = message.channel.permissionsFor(message.author);
+        if (!authorPerms || !authorPerms.has(command.permissions)) {
+            return message.reply("You don't have permissions for this command");
+        };
+    };
+
     // Prevents server commands from being executed in the DMs.
     if (command.guildOnly && message.channel.type === "dm") {
         return message.reply("I can't execute that command inside DMs!");
