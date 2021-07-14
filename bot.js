@@ -43,5 +43,10 @@ client.on("message", message => {
     };
 });
 
+client.once("ready", () => {
+    client.user.setPresence({ activity: { name: "$help", type: "LISTENING" }, status: "online" });
+    console.log("Ready!");
+});
+
 // Start the bot.
 client.login(process.env.token);
