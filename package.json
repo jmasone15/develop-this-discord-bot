@@ -21,6 +21,7 @@
   "homepage": "https://github.com/jmasone15/develop-this-discord-bot#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "mongoose": "^5.13.2"
   }
 }

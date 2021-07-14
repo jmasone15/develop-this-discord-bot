@@ -1,5 +1,6 @@
 // Required Dependencies
 const Discord = require("discord.js");
+const mongoose = require("mongoose");
 const fs = require("fs");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -117,6 +118,17 @@ client.on("message", message => {
 client.once("ready", () => {
     client.user.setPresence({ activity: { name: "$help", type: "LISTENING" }, status: "online" });
     console.log("Ready!");
+});
+
+// Connection to the database to store user profiles.
+mongoose.connect(process.env.MONGODB_SRV, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+}, (err) => {
+    if (err) throw err;
+    console.log("Connected to MongoDB");
 });
 
 // Start the bot.
