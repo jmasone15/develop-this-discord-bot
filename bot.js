@@ -31,7 +31,9 @@ client.on("message", message => {
     const cName = args.shift().toLowerCase();
 
     // Get the command from the command collection and verify it exists.
-    const command = client.commands.get(cName);
+    // Also, check if the command is an alias for another command.
+    // If there is no command with the input or alias name, the function ends.
+    const command = client.commands.get(cName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cName));
     if (!command) return;
 
     // Prevents server commands from being executed in the DMs.

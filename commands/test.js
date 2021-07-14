@@ -3,6 +3,7 @@ module.exports = {
     description: "Test command for developing.",
     cooldown: 5,
     guildOnly: true,
+    aliases: ["tests", "cool-test"],
     args: false,
     usage: " ",
     async execute(message, args) {
