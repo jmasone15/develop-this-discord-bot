@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // New instance of the Discord client class 
-const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"] });
+const client = new Discord.Client();
 
 // Discord Collections.
 client.commands = new Discord.Collection();
@@ -106,7 +106,7 @@ client.on("message", message => {
 
     // Execute desired command
     try {
-        command.execute(message, args)
+        command.execute(message, args, Discord, client);
     } catch (err) {
         console.error(err);
         message.reply("There was a server side error, please contact bot admin for assitance.");
