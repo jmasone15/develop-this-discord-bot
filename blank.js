@@ -1,9 +1,11 @@
 module.exports = {
     name: "",
     description: "",
-    cooldown: 5,
+    guildOnly: true,
     args: false,
     usage: " ",
+    aliases: ["", ""],
+    cooldown: 3,
     async execute(message, args) {
         try {
 
