@@ -25,7 +25,7 @@ module.exports = {
             // If there are entrances in the array that aren't the default value,
             // We then need to add the new value to the existing array.
 
-            if (existingProfile.languages[0] === "Use the command '<$profile-languages> <language>' to change your languages, please add one at a time.") {
+            if (existingProfile.languages[0] === "Use the command \`<$profile-languages> <language>\` to change your languages, please add one at a time.") {
 
                 // Create the new array and push the argument value into it.
                 const newLanguageArray = [];
