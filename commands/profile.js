@@ -11,6 +11,10 @@ module.exports = {
     cooldown: 3,
     async execute(message, args, Discord) {
         const author = message.author;
+        const { commands } = message.client;
+        const commandObjectArray = [];
+
+        commands.map(c => commandObjectArray.push({ name: `\`${command.name}\``, value: command.description }));
 
         // The arguments function will return an empty array if there are no arguments.
         // So to see if the author wants to view/setup profile or view another user's profile, we check the length of the args array.
@@ -39,6 +43,7 @@ module.exports = {
                     // Send the message embed to the user.
                     try {
                         await message.reply(existingProfileMessageEmbed);
+                        message.author.send()
                     } catch (err) {
                         console.error(err);
                         message.reply("There was a message embed error, please contact bot admin for assitance.");
