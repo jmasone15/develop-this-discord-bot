@@ -60,6 +60,25 @@ module.exports = {
                     // Save the newly created profile to the database
                     const savedProfile = await newProfile.save();
 
+                    // Command List Embed from help command
+                    // Get the list of all commands in this folder from the command collection.
+                    const { commands } = message.client;
+                    const commandObjectArray = [];
+
+                    // Map over all of the commands and add each one into the Object Array as an object.
+                    commands.map(c => commandObjectArray.push({ name: `\`${c.name}\``, value: c.description }));
+
+                    // Build command list embed
+                    const allCommandsEmbed = new Discord.MessageEmbed()
+                        .setColor("#7700ff")
+                        .setTitle("Command List:")
+                        .setDescription(`You can use \`$[command name]\` to get more info on a specific command.`)
+                        .addFields(commandObjectArray)
+                        .setTimestamp();
+
+
+                    // If no particular command was specified, DM the author with a list of all commands.
+
                     // We then want the user to populate their new profile with data about themselves.
                     // We send them an embed with their new profile, which only has their username and avatar.
                     // The default values from the model inform the user what commands they can use to continue their profile setup.
@@ -79,8 +98,10 @@ module.exports = {
                         .setTimestamp()
 
                     // Send the message embed to the user.
+                    // Send the author a dm with the commands embed
                     try {
                         await message.reply(profileMessageEmbed);
+                        await message.author.send(allCommandsEmbed);
                         message.reply("Your profile has been setup! \nI just sent you a dm with a list of all the profile commands.")
                     } catch (err) {
                         console.error(err);
