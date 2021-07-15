@@ -131,5 +131,7 @@ mongoose.connect(process.env.MONGODB_SRV, {
     console.log("Connected to MongoDB");
 });
 
+// Test for heroku
+
 // Start the bot.
 client.login(process.env.token);
