@@ -31,6 +31,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
             message.reply("Error using this command, please try again.")
-        }
+        };
     }
 }

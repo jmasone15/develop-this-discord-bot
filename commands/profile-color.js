@@ -4,7 +4,7 @@ module.exports = {
     name: "profile-color",
     description: "Profile command to update the color of your profile message.",
     guildOnly: false,
-    args: false,
+    args: true,
     usage: "<#000000>",
     aliases: ["profiles-color", "profile-colors"],
     cooldown: 3,
@@ -34,6 +34,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
             message.reply("Error using this command, please try again.")
-        }
+        };
     }
 }

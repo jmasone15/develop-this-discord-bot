@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 
 // Set up default entries for a user who has not setup their profile yet.
 const color = "#7700ff"
-const bio = "Use the command \'<!profile-bio> <bio>'\ to change your bio.";
-const github = "Use the command '<!profile-github> <url>' to change your github url.";
-const portfolio = "Use the command '<!profile-portfolio> <url>' to change your portfolio url.";
-const linkedin = "Use the command '<!profile-linkedin> <url>' to change your linkedIn url.";
-const languages = ["Use the command '<!profile-languages> <language>' to change your languages, please add one at a time."];
+const bio = "Use the command \`<$profile-bio> <bio>\` to change your bio.";
+const github = "Use the command \`<$profile-github> <url>\` to change your github url.";
+const portfolio = "Use the command \`<$profile-portfolio> <url>\` to change your portfolio url.";
+const linkedin = "Use the command \`<$profile-linkedin> <url>\` to change your linkedIn url.";
+const languages = ["Use the command \`<$profile-languages> <language>\` to change your languages, please add one at a time."];
 
 // Build the profile schema.
 // Multiple Users can have the same username across many servers, so database queries will be done by their unique id.
