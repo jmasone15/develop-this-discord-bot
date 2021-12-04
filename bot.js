@@ -1,4 +1,5 @@
 // Required Dependencies
+// Test comment for deployment to heroku.
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
 const fs = require("fs");
@@ -19,7 +20,7 @@ const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith("
 for (const file of commandFiles) {
     const commandFile = require(`./commands/${file}`);
     client.commands.set(commandFile.name, commandFile);
-}
+};
 
 // Command message listener.
 client.on("message", message => {
