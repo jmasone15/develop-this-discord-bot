@@ -87,6 +87,6 @@ client.on("interactionCreate", async interaction => {
         console.error(err);
         await interaction.reply({ content: "There was an error whil executing this command!", ephemeral: true });
     }
-})
+});
 
 client.login(token);
